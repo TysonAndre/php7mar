@@ -79,7 +79,6 @@ class main {
 
 		$start = microtime(true);
 
-		$fileExtensions = (is_array($this->options->getOption('x')) ? $this->options->getOption('x') : null);
 		$this->scanner = new scanner($this->projectPath, $this->options->getOption('x'));
 		$this->reporter->add("Including file extensions: ".implode(",", $this->scanner->getFileExtensions()), 0, 1);
 
@@ -100,7 +99,6 @@ class main {
 	 * @return	void
 	 */
 	private function run() {
-		$issues = [];
 		$totalFiles = 0;
 		$totalLines = 0;
 		$filePath = $this->scanner->getCurrentFilePath();
@@ -142,7 +140,7 @@ class main {
 				$totalLines++;
 				$issues = $this->tests->testLine($line);
 				foreach ($issues as $section => $tests) {
-					foreach ($tests as $test => $true) {
+					foreach ($tests as $test => $_) {
 						$this->reporter->addToSection($section, $test, $filePath, $lineNumber, $line);
 					}
 				}

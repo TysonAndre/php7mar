@@ -49,7 +49,7 @@ class reporter {
 	/**
 	 * File Handler Resource
 	 *
-	 * @var		string
+	 * @var		resource
 	 */
 	private $file;
 

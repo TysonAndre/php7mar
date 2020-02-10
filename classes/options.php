@@ -198,7 +198,7 @@ class options {
 	 *
 	 * @access	private
 	 * @param	string	Raw option from the command line.
-	 * @return	array	Option name, value if provided.
+	 * @return	void
 	 */
 	private function parseOption($rawOption) {
 		$regex = "#^(?P<option>-[a-zA-Z]{1}|--[a-zA-Z-]{2,})(?:=(?P<value>['|\"]?.+?['|\"]?))?$#";
@@ -233,7 +233,7 @@ class options {
 						}
 					}
 				}
-				$this->options[$option] = (isset($value) ? $value : true);
+				$this->options[$option] = $value ?? true;
 			}
 		}
 	}
@@ -247,12 +247,14 @@ class options {
 	private function enforceOptions() {
 		foreach ($this->validShortOptions as $option => $info) {
 			if ($info['option'] === self::OPTION_REQUIRED && !isset($this->options[$option])) {
-				die("The option `{$option}` is required to be given.\n	{$info['comment']}\n	{$info['description']}\n	Example: {$info['example']}\n");
+				$description = $info['description'] ?? '';
+				die("The option `{$option}` is required to be given.\n	{$info['comment']}\n	{$description}\n	Example: {$info['example']}\n");
 			}
 		}
 		foreach ($this->validLongOptions as $option => $info) {
 			if ($info['option'] === self::OPTION_REQUIRED && !isset($this->options[$option])) {
-				die("The option `{$option}` is required to be given.\n	{$info['comment']}\n	{$info['description']}\n	Example: {$info['example']}\n");
+				$description = $info['description'] ?? '';
+				die("The option `{$option}` is required to be given.\n	{$info['comment']}\n	{$description}\n	Example: {$info['example']}\n");
 			}
 		}
 	}
