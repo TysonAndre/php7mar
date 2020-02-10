@@ -52,6 +52,12 @@ class options {
 	 * @var		array
 	 */
 	private $validShortOptions = [
+		'h'	=> [
+			'option'		=> self::OPTION_OPTIONAL,
+			'value' 		=> self::VALUE_NONE,
+			'comment'		=> 'Print this help message',
+			'example'		=> '-h'
+		],
 		'f'	=> [
 			'option'		=> self::OPTION_REQUIRED,
 			'value' 		=> self::VALUE_REQUIRED,
@@ -108,6 +114,12 @@ class options {
 			'description'	=> 'If this option is not used syntax checking will use the default PHP installation to test syntax.',
 			'example'		=> '--php="/path/to/php/binary/php"'
 		],
+		'help'	=> [
+			'option'		=> self::OPTION_OPTIONAL,
+			'value' 		=> self::VALUE_NONE,
+			'comment'		=> 'Print this help message',
+			'example'		=> '--help'
+		],
 		/*'format'	=> [
 			'option'		=> self::OPTION_OPTIONAL,
 			'value' 		=> self::VALUE_REQUIRED,
@@ -150,6 +162,9 @@ class options {
 		foreach ($options as $option) {
 			$this->parseOption($option);
 		}
+		if (array_key_exists('h', $this->options) || array_key_exists('help', $this->options)) {
+			$this->printOptionsAndExit();
+		}
 		$this->enforceOptions();
 	}
 
@@ -165,7 +180,11 @@ class options {
 			echo "-\033[1m{$option}\033[0m\n	{$info['comment']}\n	{$info['description']}\n		Example: {$info['example']}\n\n";
 		}
 		foreach ($this->validLongOptions as $option => $info) {
-			echo "--\033[1m{$option}\033[0m\n	{$info['comment']}\n	{$info['description']}\n		Example: {$info['example']}\n\n";
+			echo "--\033[1m{$option}\033[0m\n	{$info['comment']}\n";
+			if (array_key_exists('description', $info)) {
+				echo "	{$info['description']}\n";
+			}
+			echo "		Example: {$info['example']}\n\n";
 		}
 		exit;
 	}
