@@ -105,7 +105,7 @@ class options {
 			'option'		=> self::OPTION_OPTIONAL,
 			'value' 		=> self::VALUE_REQUIRED,
 			'comment'		=> 'File path to the PHP binary to use for syntax checking.',
-			'description'	=> 'If this option is not used syntax checking will use the default PHP installtion to test syntax.',
+			'description'	=> 'If this option is not used syntax checking will use the default PHP installation to test syntax.',
 			'example'		=> '--php="/path/to/php/binary/php"'
 		],
 		/*'format'	=> [
