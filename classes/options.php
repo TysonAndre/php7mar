@@ -52,12 +52,6 @@ class options {
 	 * @var		array
 	 */
 	private $validShortOptions = [
-		'h'	=> [
-			'option'		=> self::OPTION_OPTIONAL,
-			'value' 		=> self::VALUE_NONE,
-			'comment'		=> 'Print this help message',
-			'example'		=> '-h'
-		],
 		'f'	=> [
 			'option'		=> self::OPTION_REQUIRED,
 			'value' 		=> self::VALUE_REQUIRED,
@@ -98,6 +92,12 @@ class options {
 			'comment'		=> 'Print progress output.',
 			'description'	=> 'Print a message to stderr as each file is being analyzed.',
 			'example'		=> '-p',
+		],
+		'h'	=> [
+			'option'		=> self::OPTION_OPTIONAL,
+			'value' 		=> self::VALUE_NONE,
+			'comment'		=> 'Print this help message',
+			'example'		=> '-h'
 		],
 	];
 
@@ -177,7 +177,11 @@ class options {
 	private function printOptionsAndExit() {
 		echo "Available Options:\n";
 		foreach ($this->validShortOptions as $option => $info) {
-			echo "-\033[1m{$option}\033[0m\n	{$info['comment']}\n	{$info['description']}\n		Example: {$info['example']}\n\n";
+			echo "-\033[1m{$option}\033[0m\n	{$info['comment']}\n";
+			if (array_key_exists('description', $info)) {
+				echo "	{$info['description']}\n";
+			}
+			echo "		Example: {$info['example']}\n\n";
 		}
 		foreach ($this->validLongOptions as $option => $info) {
 			echo "--\033[1m{$option}\033[0m\n	{$info['comment']}\n";

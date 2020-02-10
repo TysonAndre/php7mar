@@ -72,12 +72,14 @@ class reporter {
 		$reportFolder = main::getRealPath($reportFolder);
 		if ($reportFolder !== false) {
 			$this->reportFolder = $reportFolder;
+			$this->fullFilePath = $this->reportFolder.DIRECTORY_SEPARATOR.date('Y-m-d H.i.s ').basename($this->projectPath, '.php').".md";
+			$this->file = fopen($this->fullFilePath, 'w+');
 		} else {
-			$this->reportFolder = PHP7MAR_DIR.DIRECTORY_SEPARATOR.'reports';
+			$this->reportFolder = null;
+			$this->fullFilePath = null;
+			$this->file = STDOUT;
 		}
-		$this->fullFilePath = $this->reportFolder.DIRECTORY_SEPARATOR.date('Y-m-d H.i.s ').basename($this->projectPath, '.php').".md";
 
-		$this->file = fopen($this->fullFilePath, 'w+');
 		register_shutdown_function([$this, 'onShutdown']);
 
 		$this->add(date('c', $this->startTime), 0, 1);
@@ -158,7 +160,9 @@ class reporter {
 	 * @return	void
 	 */
 	public function onShutdown() {
-		fclose($this->file);
+		if ($this->file !== STDOUT) {
+			fclose($this->file);
+		}
 	}
 }
 ?>
