@@ -92,11 +92,11 @@ class scanner {
 	 * @return	mixed	Array of lines from the file or false for no more files.
 	 */
 	public function scanNextFile() {
-		$_file = each($this->files);
-		if ($_file === false) {
+		$file = current($this->files);
+		if ($file === false) {
 			return false;
 		}
-		$file = $_file['value'];
+		next($this->files);
 
 		$lines = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 		if ($lines === false) {
