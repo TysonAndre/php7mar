@@ -233,6 +233,10 @@ class options {
 						}
 					}
 				}
+				if (isset($this->options[$option])) {
+					// TODO: Support repetition
+					die("Cannot repeat the option " . $matches['option'] . " yet\n");
+				}
 				$this->options[$option] = $value ?? true;
 			}
 		}
