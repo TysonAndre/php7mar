@@ -82,8 +82,8 @@ class options {
 			'option'			=> self::OPTION_OPTIONAL,
 			'value'				=> self::VALUE_REQUIRED,
 			'comment'			=> 'File extensions to include when scanning a directory.',
-			'description'		=> 'A comma separated list of file extensions to consider as PHP files.  Defaults to "php"',
-			'example'			=> '-x="php,inc"',
+			'description'		=> 'A comma separated list of file extensions to consider as PHP files.  Defaults to "php,inc,html"',
+			'example'			=> '-x="php,inc,html"',
 			'comma_delimited'	=> true
 		],
 		'p'	=> [
